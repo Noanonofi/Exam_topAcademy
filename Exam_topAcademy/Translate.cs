@@ -47,8 +47,8 @@ namespace Exam_topAcademy
                 {
                     if (checkWord(wordENG) == "eng")
                     {
-                        words.Add(wordRUS);
-                        dictionaryENG_RUS.Add(wordENG, words);
+                        List<string> translateWord = addVariantTranslateWord();
+                        dictionaryENG_RUS.Add(wordENG, translateWord);
                         Console.WriteLine("Слово добавлено в ENG-RUS словарь");
                     }
                 }
@@ -63,8 +63,9 @@ namespace Exam_topAcademy
                 {
                     if (checkWord(wordRUS) == "rus")
                     {
-                        words.Add(wordRUS);
-                        dictionaryRUS_ENG.Add(wordRUS, words);
+                        //Добавляю КОЛЛЕКЦИЮ слов
+                        List<string> translateWord = addVariantTranslateWord();
+                        dictionaryRUS_ENG.Add(wordRUS, translateWord);
                         Console.WriteLine("Слово добавлено в RUS-ENG словарь");
                     }
                 }
@@ -73,6 +74,96 @@ namespace Exam_topAcademy
                     Console.WriteLine("Словарь не существует");
                 }
             }
+        }
+
+        //Метод для добавления сразу нескольких вариантов перевода слова
+        public List<string> addVariantTranslateWord()
+        {
+            string variantTranslateTmp = "";
+            string tmpKey;
+            Int16 choice;
+            List<string> tmpWord = new List<string>();
+            bool loopConnitue;
+
+            Console.WriteLine("В какой словарь добавить новый вариант перевода? ");
+            Console.WriteLine("1. ENG-RUS(Англо-русский словарь)\n 2. RUS-ENG(Русско-Английский словарь)");
+
+            choice = Convert.ToInt16(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    Console.Clear();
+                    if(dictionaryENG_RUS != null)
+                    {
+                        Console.WriteLine("Введите слово, к которому добавить новый вариант перевода: ");
+                        tmpKey = Console.ReadLine();
+                        if (dictionaryENG_RUS.ContainsKey(tmpKey))
+                        {
+                            Console.Clear();
+                            do 
+                            {
+                                Console.WriteLine("Введите новый вариант перевода: ");
+                                variantTranslateTmp = Console.ReadLine();
+                                if ("eng" == checkWord(variantTranslateTmp))
+                                {
+                                    tmpWord.Add(variantTranslateTmp);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Введенное слово не является английским.");
+                                }
+                                Console.WriteLine("Добавить еще одно слово?: \n 0. No\n 1. Yes \n");
+                                loopConnitue = Convert.ToBoolean(Console.ReadLine());
+                            }
+                            while (loopConnitue);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Слово не найдено");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Словарь не существует.");
+                    }
+                    break;
+                case 2:
+                    Console.Clear();
+                    if (dictionaryRUS_ENG != null)
+                    {
+                        Console.WriteLine("Введите слово, к которому добавить новый вариант перевода: ");
+                        tmpKey = Console.ReadLine();
+                        if (dictionaryRUS_ENG.ContainsKey(tmpKey))
+                        {
+                            Console.Clear();
+                            do
+                            {
+                                Console.WriteLine("Введите новый вариант перевода: ");
+                                variantTranslateTmp = Console.ReadLine();
+                                if ("eng" == checkWord(variantTranslateTmp))
+                                {
+                                    tmpWord.Add(variantTranslateTmp);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Введенное слово не является русским.");
+                                }
+                                Console.WriteLine("Добавить еще одно слово?: \n 0. No\n 1. Yes \n");
+                                loopConnitue = Convert.ToBoolean(Console.ReadLine());
+                            }while (loopConnitue);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Слово не найдено");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Словарь не существует.");
+                    }
+                    break;
+            }
+            return tmpWord;
         }
 
         // Метод нерабочий
@@ -221,14 +312,13 @@ namespace Exam_topAcademy
                         return false;
                     }
                 case "2":
+                    // Дописать метод
                     Console.WriteLine("Какой перевод слово удаляем?");
                     foreach (var item in words)
                     {
                         Console.WriteLine($"{item}\n");
                     }
                     break;
-
-
             }
         }
     }
