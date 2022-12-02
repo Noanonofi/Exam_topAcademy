@@ -39,45 +39,59 @@ namespace Exam_topAcademy
             }
         }
         // Добавление слова и его вариантов перевода
-        public void addWord(string typeDictionary, string wordENG, string wordRUS)
+        public void addWord(string wordENG, string wordRUS)
         {
-            if (typeDictionary == "eng")
+            Int16 choice;
+            string typeDictionary;
+            Console.WriteLine("1. Добавить новое слово.\n2.Добавить слово в существующий словарь");
+            choice = Convert.ToInt16(Console.ReadLine());
+            switch (choice)
             {
-                if (dictionaryENG_RUS != null)
-                {
-                    if (checkWord(wordENG) == "eng")
+                case 1:
+                    Console.WriteLine("Введите тип словаря. \n 1. eng\n2. rus");
+                    typeDictionary = Console.ReadLine();
+                    if (typeDictionary == "eng")
                     {
-                        List<string> translateWord = addVariantTranslateWord();
-                        dictionaryENG_RUS.Add(wordENG, translateWord);
-                        Console.WriteLine("Слово добавлено в ENG-RUS словарь");
+                        if (dictionaryENG_RUS != null)
+                        {
+                            if (checkWord(wordENG) == "eng")
+                            {
+                                List<string> translateWord = addVariantTranslateWord();
+                                dictionaryENG_RUS.Add(wordENG, translateWord);
+                                Console.WriteLine("Слово добавлено в ENG-RUS словарь");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Словарь не существует");
+                        }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Словарь не существует");
-                }
-            }
-            else if (typeDictionary == "rus")
-            {
-                if (dictionaryRUS_ENG != null)
-                {
-                    if (checkWord(wordRUS) == "rus")
+                    else if (typeDictionary == "rus")
                     {
-                        //Добавляю КОЛЛЕКЦИЮ слов
-                        List<string> translateWord = addVariantTranslateWord();
-                        dictionaryRUS_ENG.Add(wordRUS, translateWord);
-                        Console.WriteLine("Слово добавлено в RUS-ENG словарь");
+                        if (dictionaryRUS_ENG != null)
+                        {
+                            if (checkWord(wordRUS) == "rus")
+                            {
+                                //Добавляю КОЛЛЕКЦИЮ слов
+                                List<string> translateWord = addVariantTranslateWord();
+                                dictionaryRUS_ENG.Add(wordRUS, translateWord);
+                                Console.WriteLine("Слово добавлено в RUS-ENG словарь");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Словарь не существует");
+                        }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Словарь не существует");
-                }
+                    break;
+                case 2:
+                    addVariantTranslateWord();
+                    break;
             }
         }
 
         //Метод для добавления сразу нескольких вариантов перевода слова
-        public List<string> addVariantTranslateWord()
+        private List<string> addVariantTranslateWord()
         {
             string variantTranslateTmp = "";
             string tmpKey;
