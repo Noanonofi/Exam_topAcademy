@@ -204,7 +204,7 @@ namespace Exam_topAcademy
             return tmpWord;
         }
 
-        // Метод нерабочий
+        // Метод нерабочий - возможно стоит заменить на ContainsKey?
         private string isCheckWordInDictionary(string word)
         {
             if (checkWord(word) == "eng")
