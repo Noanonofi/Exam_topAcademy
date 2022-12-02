@@ -48,8 +48,10 @@ namespace Exam_topAcademy
             switch (choice)
             {
                 case 1:
+                    Console.Clear();
                     Console.WriteLine("Введите тип словаря. \n 1. eng\n2. rus");
                     typeDictionary = Console.ReadLine();
+                    Console.Clear();
                     if (typeDictionary == "eng")
                     {
                         if (dictionaryENG_RUS != null)
@@ -59,12 +61,18 @@ namespace Exam_topAcademy
                                 List<string> translateWord = addVariantTranslateWord();
                                 dictionaryENG_RUS.Add(wordENG, translateWord);
                                 Console.WriteLine("Слово добавлено в ENG-RUS словарь");
+                                break;
                             }
                         }
                         else
                         {
                             Console.WriteLine("Словарь не существует");
                         }
+                    }
+                    else if(typeDictionary != "eng" && typeDictionary != "rus")
+                    {
+                        Console.WriteLine("Введет некорретный словарь.");
+                        break;
                     }
                     else if (typeDictionary == "rus")
                     {
@@ -76,6 +84,7 @@ namespace Exam_topAcademy
                                 List<string> translateWord = addVariantTranslateWord();
                                 dictionaryRUS_ENG.Add(wordRUS, translateWord);
                                 Console.WriteLine("Слово добавлено в RUS-ENG словарь");
+                                break;
                             }
                         }
                         else
@@ -83,8 +92,14 @@ namespace Exam_topAcademy
                             Console.WriteLine("Словарь не существует");
                         }
                     }
+                    else if (typeDictionary != "eng" && typeDictionary != "rus")
+                    {
+                        Console.WriteLine("Введет некорретный словарь.");
+                        break;
+                    }
                     break;
                 case 2:
+                    Console.Clear();
                     addVariantTranslateWord();
                     break;
             }
@@ -111,29 +126,34 @@ namespace Exam_topAcademy
                     {
                         Console.WriteLine("Введите слово, к которому добавить новый вариант перевода: ");
                         tmpKey = Console.ReadLine();
-                        if (dictionaryENG_RUS.ContainsKey(tmpKey))
+                        if(checkWord(tmpKey) == "eng")
                         {
-                            Console.Clear();
-                            do 
+                            if (dictionaryENG_RUS.ContainsKey(tmpKey))
                             {
-                                Console.WriteLine("Введите новый вариант перевода: ");
-                                variantTranslateTmp = Console.ReadLine();
-                                if ("eng" == checkWord(variantTranslateTmp))
+                                Console.Clear();
+                                do
                                 {
-                                    tmpWord.Add(variantTranslateTmp);
+                                    Console.WriteLine("Введите новый вариант перевода: ");
+                                    variantTranslateTmp = Console.ReadLine();
+                                    if ("eng" == checkWord(variantTranslateTmp))
+                                    {
+                                        Console.Clear();
+                                        tmpWord.Add(variantTranslateTmp);
+                                        Console.WriteLine("Вариант перевода добавлен в словарь");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Введенное слово не является английским.");
+                                    }
+                                    Console.WriteLine("Добавить еще одно слово?: \n 0. No\n 1. Yes \n");
+                                    loopConnitue = Convert.ToBoolean(Console.ReadLine());
                                 }
-                                else
-                                {
-                                    Console.WriteLine("Введенное слово не является английским.");
-                                }
-                                Console.WriteLine("Добавить еще одно слово?: \n 0. No\n 1. Yes \n");
-                                loopConnitue = Convert.ToBoolean(Console.ReadLine());
+                                while (loopConnitue);
                             }
-                            while (loopConnitue);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Слово не найдено");
+                            else
+                            {
+                                Console.WriteLine("Слово не найдено");
+                            }
                         }
                     }
                     else
@@ -147,28 +167,32 @@ namespace Exam_topAcademy
                     {
                         Console.WriteLine("Введите слово, к которому добавить новый вариант перевода: ");
                         tmpKey = Console.ReadLine();
-                        if (dictionaryRUS_ENG.ContainsKey(tmpKey))
+                        if(checkWord(tmpKey) == "rus")
                         {
-                            Console.Clear();
-                            do
+                            if (dictionaryRUS_ENG.ContainsKey(tmpKey))
                             {
-                                Console.WriteLine("Введите новый вариант перевода: ");
-                                variantTranslateTmp = Console.ReadLine();
-                                if ("eng" == checkWord(variantTranslateTmp))
+                                Console.Clear();
+                                do
                                 {
-                                    tmpWord.Add(variantTranslateTmp);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Введенное слово не является русским.");
-                                }
-                                Console.WriteLine("Добавить еще одно слово?: \n 0. No\n 1. Yes \n");
-                                loopConnitue = Convert.ToBoolean(Console.ReadLine());
-                            }while (loopConnitue);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Слово не найдено");
+                                    Console.WriteLine("Введите новый вариант перевода: ");
+                                    variantTranslateTmp = Console.ReadLine();
+                                    if ("eng" == checkWord(variantTranslateTmp))
+                                    {
+                                        tmpWord.Add(variantTranslateTmp);
+                                        Console.WriteLine("Вариант перевода добавлен в словарь");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Введенное слово не является русским.");
+                                    }
+                                    Console.WriteLine("Добавить еще одно слово?: \n 0. No\n 1. Yes \n");
+                                    loopConnitue = Convert.ToBoolean(Console.ReadLine());
+                                } while (loopConnitue);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Слово не найдено");
+                            }
                         }
                     }
                     else
